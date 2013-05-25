@@ -1,8 +1,27 @@
 <html>
+<head>
+<script language='javascript' type='text/javascript' src='/static/jquery-1.10.0.min.js'></script>
+<script language='javascript' type='text/javascript' src='/static/jquery.flot.js'></script>
+<script language='javascript' type='text/javascript' src='/static/jquery.flot.time.js'></script>
+</head>
 <body>
+<h1>FLot example</h1>
+<div id="placeholder" style="width:600px; height:300px;"></div>
 <h1>Hello</h1>
 {% for sample in samples %}
 	<p>{{sample}}</p>
 {% endfor %}
+<script type="text/javascript">
+$(function () {
+	var d1 = [
+		{% for sample in samples %}
+		[{{sample[0]}}, {{sample[1]}}],
+		{% endfor %}
+		];
+	$.plot($("#placeholder"), [d1], {xaxis: { mode: "time", 
+						timezone: "browser"}} );
+	
+});
+</script>
 </body>
 </html>

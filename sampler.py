@@ -34,7 +34,7 @@ def sample(samples):
 
 if __name__ == "__main__":
     #open the com port
-    ser = serial.Serial("COM4", 9600, timeout=1)
+    ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
     time.sleep(2)
     try:
         initdb()
@@ -42,4 +42,4 @@ if __name__ == "__main__":
         pass
     while 1:
         sample(10)
-        time.sleep(1)
+        time.sleep(60)
