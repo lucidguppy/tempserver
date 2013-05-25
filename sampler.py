@@ -1,6 +1,6 @@
 import serial
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 import sqlite3
 
 
@@ -31,6 +31,13 @@ def sample(samples):
     conn.commit()
     conn.close()
 
+def trim_data():
+    conn = sqlite3.connect('temperatures.db', detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
+    c = conn.cursor()
+    c.execute('''DELETE FROM temperatures
+               WHERE ts < ?''' , (datetime.now()-timedelta(days=30),))
+    conn.commit()
+    conn.close()
 
 if __name__ == "__main__":
     #open the com port
@@ -42,4 +49,5 @@ if __name__ == "__main__":
         pass
     while 1:
         sample(10)
+        trim_data()
         time.sleep(60)
